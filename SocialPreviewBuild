@@ -1,0 +1,30 @@
+ffmpeg -y \
+  -i [INPUT STILL BG] \
+  -i [INUPT MOVIE] \
+  -i [INPUT WATERMARK IMAGE] \
+  -filter_complex "\
+      [0:v]scale=672:-1[bg];\
+      [1:v]scale=346:-1[vid];\
+      [bg][vid]overlay=(W-w)/2:(H-h)/2[comped];\
+      [comped][2:v]overlay=(main_w-overlay_w)/2:main_h-overlay_h-20[out]" \
+  -map [out] \
+  -map 0:a? \
+  -x264opts \
+      colorprim=bt709:\
+      transfer=bt709:\
+      colormatrix=bt709:\
+      fullrange=off 
+-s 672x378 \
+-pix_fmt yuv420p \
+-movflags +faststart \
+-flags +loop \
+-preset medium \
+-keyint_min 2 \
+-g 6 \
+-b:v 2500k \
+-maxrate 2750k \
+-bufsize 2500k \
+-c:a libfdk_aac \
+-b:a 192k \
+-f mp4 \
+[OUTPUT].mov
