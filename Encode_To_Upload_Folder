@@ -1,0 +1,24 @@
+#!/bin/bash
+
+read -p "Drop the file: " FILENAME #Gets the dropped file and path
+
+DIR=$(dirname "${FILENAME}")/ #Pulls the enclosing folder
+cd "$DIR" #Change directory to file's enclosing folder
+cd .. #Change directory to the parent directory
+UPLOAD=$(PWD)"/Uploads" #Create the path to the Uploads folder
+
+mkdir -p "$UPLOAD" #If the Uploads folder exists, do nothing. Otherwise, create the Uploads folder
+
+theFile="$UPLOAD""/$(basename "$FILENAME" .mov).mp4" #Set the output name and path
+
+ffmpeg -y -i "$FILENAME" -c:v libx264 -pix_fmt yuv420p "$theFile" #The ffmpeg recipe
+
+echo
+echo "-----------------------------------------------------"
+echo "The file is: " "$FILENAME"
+echo "The directory is:" "$DIR"
+echo "The Uploads folder is: " "$UPLOAD"
+echo "-----------------------------------------------------"
+echo
+
+open "$UPLOAD" #Open the folder to reveal the encoded movie
