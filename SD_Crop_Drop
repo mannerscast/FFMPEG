@@ -1,0 +1,17 @@
+#!/bin/bash
+
+read -p "Drop the file: " FILENAME #Get the file and path
+
+DIR=$(dirname "${FILENAME}")/ #Get the path
+cd "$DIR" #Change directory to the parent directory
+
+theFile="$(basename "$FILENAME" _HD.mov)_SD.mov" #Name the output file
+
+ffmpeg -y -i "$FILENAME" -filter:v crop=in_w/\(4/3\):in_h -c:v prores -profile:v 2 "$theFile" #Crop and encode the SD
+
+echo
+echo "-----------------------------------------------------"
+echo "The file is: " "$FILENAME"
+echo "The directory is:" "$DIR"
+echo "-----------------------------------------------------"
+echo
