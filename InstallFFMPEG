@@ -2,4 +2,5 @@ INSTALL HOMEBREW
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 INSTALL FFMPEG WITH ALL OPTIONS
-brew install ffmpeg $(brew options ffmpeg | grep -vE ‘\s’ | grep -- ‘--with-’ | tr ‘\n’ ' ’)
+brew install ffmpeg $(brew options ffmpeg | grep -vE '\s' | grep -- '--with-' | tr '\n' ' ')
+# It's possible that this command must be copied from the editor instead of from the code display page.
